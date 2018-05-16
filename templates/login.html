@@ -1,0 +1,74 @@
+<!-- WRAPPER template < site.wrapper.html -->
+	
+ <h1>Log in</h1>
+
+<!-- IF forgotpassword -->
+    <h2>Reset password</h2>
+
+        <p>
+            <strong>Enter your email address</strong> and we will send you a reset password: </p>
+
+            <form action="/login?forgotpassword=1" method="post" id="toploginform">
+                <input type="hidden" name="action" value="resetpassword" />
+                <table>
+                    <tr>
+                        <th>Your email:</th>
+                        <td><input type="text" name="email" id="loginemailinput" value="{email}" /></td>
+                    </tr>
+                  <!-- IF usecaptcha -->
+                  <tr>
+                      <th>Human? {captchaquestion}</th>
+                      <td>
+                        <input type="text" name="captcha" value="{captcha}" />
+                      </td>
+                    </tr>
+                  <!-- ENDIF -->
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Reset my password" /></td>
+                    </tr>
+                </table>
+            </form>
+
+<!-- ELSE -->
+    <!-- IF user -->
+    <p>
+        <!-- IF user.username="guest_user" -->
+            You are using the site as a guest user.
+            <a href="/login">Log in with your user account</a> or 
+            <a href="/signup">Create an account</a> (it takes about 12 seconds)
+        <!-- ELSE -->
+            You are currently logged in as <strong>{user.username}</strong>.
+            <a href="/?action=logout">Log in as a different user</a>
+        <!-- ENDIF -->
+    </p>
+    <!-- ELSE -->
+        <form action="/login" method="post">
+            <div class="span12">
+              <input type="hidden" name="action" value="login" />
+            <fieldset>
+                  <div class="clearfix  <!-- IF errorcode="INVALID_EMAIL" -->error<!-- ENDIF -->">
+                    <label for="xlEmail">E-mail</label>
+                    <div class="input">
+                      <input type="email" class="xlarge" id="xlEmail" name="email" value="{email}" />
+                    </div>
+                  </div><!-- /clearfix -->
+                <div class="clearfix <!-- IF errorcode="INVALID_PASSWORD" -->error<!-- ENDIF -->">
+                    <label for="xlPassword">Password</label>
+                    <div class="input">
+                      <input type="password" class="xlarge" id="xlPassword" name="password" value="{password}" />
+                </div>
+            </div>       
+                    <div class="actions">
+                         <p>
+                         </p>
+                        <input type="submit" class="btn primary" value="Log in">
+                      </div>
+            </fieldset>
+            </div>
+        </form>
+    
+        <a href="/login?forgotpassword=1">Forgot your password?</a>
+    <!-- ENDIF -->
+    
+<!-- ENDIF -->

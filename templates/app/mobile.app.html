@@ -1,0 +1,71 @@
+<!-- WRAPPER template < app/mobile.app.wrapper.html -->
+
+<!-- IF board -->
+
+    <div id="board" data-boardid="{board.boardid}" class="board clearfix" style="background-color:{board.boardcolor};">
+    
+        <!-- NOTHING NEEDED, DOING IT ALL ASYNC -->
+
+        <div style="clear:both;"></div>
+    </div>
+        <input type="hidden" id="userjson" value="{userjson}" />    
+        <input type="hidden" id="sharedurlsecret" value="{board.sharedurlsecret}" />    
+        <input type="hidden" id="accessrights" value="{accessrights}" />    
+        
+    <!-- IF accessrights="VIEWER" -->
+        <style>div.draghandle {cursor:default;}</style>
+    <!-- ENDIF -->
+
+<!-- ELSE -->
+    <div class="container">
+        <h3>Your boards</h3>
+        <div class="yourboards">
+            
+             <form class="boardthumb newboard" method="post" action="/m/app" id="boardform" style="display:block;width:auto;margin-right:0;">
+                <input type="hidden" name="action" value="createboard" />
+                <input type="hidden" name="mobile" value="1" />
+                    New:
+                    <input type="text" name="boardname" style="width:50%;display:inline;"/>
+                    <input type="submit" value="Go" style="display:inline;width:auto;" />
+            </form>
+            
+        <!-- IF boards -->
+            <!-- BEGIN boards -->
+                <!-- INCLUDE mobile.app.boardthumb.html -->
+            <!-- END boards -->
+
+        <!-- ELSE -->
+            <p><em>You have no boards yet.</em></p>
+        <!-- ENDIF -->
+        
+        </div>
+        
+        <h3>Public boards</h3>
+        <div>
+        <!-- IF publicboards -->
+            <!-- BEGIN publicboards -->
+                <!-- INCLUDE mobile.app.boardthumb.html -->
+            <!-- END publicboards -->
+        <!-- ELSE -->
+            <p><em>No public boards found.</em></p>
+        <!-- ENDIF -->        
+        <div style="clear:both;"></div>
+        </div>
+
+    </div>
+
+<script>
+    //manually fire model from standard app overview so we can hook an event to them?
+    $('.inline-control').click(function(){
+        var boardid = $(this).closest('.boardthumbcontainer').data('boardid');
+        
+        $('.modal .boardidinput').val(boardid);
+    });
+    
+    </script>
+    
+<!-- ENDIF -->
+
+<div style="z-index:500;margin-top:50px;">
+<!-- INCLUDE ../mobile.footer.html -->
+</div>

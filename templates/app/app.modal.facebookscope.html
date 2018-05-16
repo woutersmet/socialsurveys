@@ -1,0 +1,26 @@
+<div class="modal" id="facebookscopedialog" style="display:none;">
+    <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">×</a>
+        
+        <h3>Facebook info</h3>
+    </div>
+
+    <div style="padding:10px;">
+    <p>
+        Which Facebook data should the survey ask the user?
+    </p>
+    <form method="post">
+        <input type="hidden" name="action" value="setfacebookscope" />
+        <ul>
+            <!-- BEGIN survey.facebookscopeitems -->
+                <li><label style="float:none;"><input type="checkbox" name="scope[{label}]" <!-- IF enabled -->checked="checked"<!-- ENDIF --> /> {description}</label></li>
+            <!-- END survey.facebookscropeitems -->
+        </ul>
+        <div class="modal-footer actions">
+            <input class="btn primary" type="Submit" value="Save" />
+            <a class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</div>

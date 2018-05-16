@@ -1,0 +1,17 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+#the goal is to make something like mysite.com?p=features point to mysite.com/features (including all crap after that)
+
+#excluding static stuff
+RewriteCond %{REQUEST_URI} !.*\.(css|jpg|gif|zip|js|png|ico|mp3|ogg) [NC]
+
+#Google webmaster tool verification
+RewriteCond %{REQUEST_URI} !.*google6c3426c59557ef99.html [NC]
+
+#Cronjob test
+RewriteCond %{REQUEST_URI} !.*cron_daily.php [NC]
+
+RewriteRule .*?(.*) index.php?$1 [QSA]
+
+#RewriteRule ^([a-z]+)$ index.php?p=$1   [L]

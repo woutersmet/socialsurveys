@@ -1,0 +1,125 @@
+<!-- WRAPPER template < app/app.wrapper.html -->
+
+<div class="container">
+   
+<!-- IF survey -->
+<h2>Survey: {survey.surveyname}</h2>
+<a href="/app">&larr; Back to overview</a> -
+<a href="/app?surveyid={survey.surveyid}&amp;s=respondents">Respondents</a>
+
+<p>{survey.surveydescription}</p>
+
+<div class="surveybuttons" style="margin-bottom:10px;background-color:#ccc;border-bottom:3px solid #999;padding:5px;">
+    <a href="#addquestiondialog" class="btn primary" data-toggle="modal" >+ Add question / instruction</a>
+    <a href="#createsurveydialog" class="btn" data-toggle="modal" >Title &amp; description</a>
+    <a href="#introtextdialog" class="btn" data-toggle="modal" >Intro text</a>
+    <a href="#facebookscopedialog" class="btn" data-toggle="modal" >Facebook info to ask</a>
+    <a href="/survey?surveyid={survey.surveyid}" class="btn success pull-right" target="_blank">View survey &rarr;</a>
+</div>
+
+<!-- IF survey.questions -->
+    <ul id="questionlist" class="unstyled">
+    <!-- BEGIN survey.questions -->
+        <li id="question_{questionid}">
+        <div class="itemcontainer">
+            
+            <div class="questionactions">
+                Type: {questiontype} <!-- IF ismandatory="NO" --><span class="muted">(Optional)</span><!-- ENDIF --> - 
+                <a href="/app?surveyid={surveyid}&amp;action=removequestion&amp;questionid={questionid}" onClick="return confirm('Sure you want to remove the item: \'{questiontext}\'? Cannot be undone!');">Del</a> 
+            </div>
+
+            <!-- IF questiontype="SUBTITLE" -->
+                <h3 class="questiongroup">{questiontext}</h3>
+            <!-- ELSEIF questiontype="INSTRUCTION" -->
+                <div class="instructioncontainer draghandle">{questiontext}</div>
+            <!-- ELSEIF questiontype="MULTIPLECHOICE" -->
+                <div class="questioncontainer">
+                    <div class="draghandle questiontext">{questiontext}</div>
+                            <ul class="disk">
+                            <!-- BEGIN possibleanswers -->
+                                <li><input type="checkbox" disabled="disabled" />{possibleanswertext} <!-- IF numericvalue -->({numericvalue})<!-- ENDIF --></li>
+                            <!-- END possibleanswers -->
+                            </ul>
+                </div>
+            <!-- ELSEIF questiontype="GRID" -->
+                <div class="questioncontainer">
+                    <div class="questiontext">{questiontext}</div>
+                    <table>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <!-- BEGIN gridcolumns -->
+                                <th>{possibleanswertext}</td>
+                            <!-- END gridcolumns -->
+                        </tr>
+                        <!-- BEGIN gridrows -->
+                            <tr>
+                                <th>{questiontext}</th>
+                                <!-- BEGIN rowcolumns -->
+                                    <td><input type="radio" disabled="disabled" /></td>
+                                <!-- END rowcolumns -->
+                            </tr>
+                        <!-- END gridrows -->
+                    </table>
+                </div>
+            <!-- ELSE -->
+                <div class="questioncontainer">
+                    <div class="questiontext">{questiontext}</div>
+                    <input type="text" style="width:90%;height:13px;margin-left:5px;" disabled="disabled" />
+                </div>
+            <!-- ENDIF -->
+        </div>
+    <!-- END survey.questions -->
+</li>
+</ul>
+
+<!-- ELSE -->
+    <em>
+        No questions or other items yet.
+        <a href="#addquestiondialog" data-toggle="modal" >Add your first.</a>
+    </em>
+<!-- ENDIF -->
+
+<br /><br />
+
+<a name="newquestionform"></a>
+
+<script>
+
+    function saveQuestionOrder()
+    {
+        var sorted = $( "#questionlist" ).sortable( "serialize" );
+                    debug(sorted);
+
+                    $.post('/app?action=saveorder', sorted, function(response){
+                        debug('response!' + response);
+                    });
+    }
+
+    $(document).ready(function(){
+        toolbarbuttons = [["bold", "italic", "underline","|","p", "h1", "h2","link", "unlink", "image","|", "cut", "copy", "paste", "|","HTML"]];
+        extrastyle = "/css/jhtmlarea/jHtmlArea.Editor.css";
+        $("#introtextinput").htmlarea({toolbar: toolbarbuttons, css : extrastyle});
+    
+        $('#questionlist').sortable({ handle: ".draghandle,.questiontext,.questiongroup" ,
+            stop: function( event, ui ) {
+                debug(ui);
+                debug('sorted!');
+                saveQuestionOrder();
+            }});
+
+        <!-- IF addedquestion -->
+            saveQuestionOrder();
+        <!-- ENDIF -->
+    });
+</script>
+
+<!-- ELSE -->
+<p>
+    Survey not found! <a href="/app">Back to overview</a>
+</p>
+<!-- ENDIF -->
+
+<!-- INCLUDE app.modal.createsurvey.html -->
+<!-- INCLUDE app.modal.addquestion.html -->
+<!-- INCLUDE app.modal.introtext.html -->
+<!-- INCLUDE app.modal.facebookscope.html -->

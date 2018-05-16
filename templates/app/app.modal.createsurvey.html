@@ -1,0 +1,30 @@
+
+<div class="modal" id="createsurveydialog" style="display:none;">
+  <div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">×</a>
+    <h3>Create a new survey</h3>
+  </div>
+    <form method="post">
+        <input type="hidden" name="action" value="createsurvey" />
+      <div class="modal-body">
+                <strong>Name your survey:</strong><br />
+                <input placeholder="" type="text" id="surveynameinput" maxlength="40" style="height:30px;" name="surveyname" value="{survey.surveyname}" class="xlarge" /><br />
+                <br /><br />
+                
+                Description (optional):<br />
+                <textarea name="description">{survey.surveydescription}</textarea>
+                <br /><span class="muted">Description is private, for your own reference</span>
+      </div>
+  <div class="modal-footer actions">
+    <!-- IF survey -->
+      <input type="hidden" name="surveyid" value="{survey.surveyid}" />
+      <input type="submit" class="btn primary" value="Save" />
+      <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    <!-- ELSE -->
+    <input type="submit" class="btn btn-primary primary" value="Create survey" />
+    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    <!-- ENDIF -->
+  </div>
+    </form>
+    
+</div>

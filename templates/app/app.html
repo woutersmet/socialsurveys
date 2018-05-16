@@ -1,0 +1,32 @@
+<!-- WRAPPER template < app/app.wrapper.html -->
+
+    <div class="container boardscontainer">
+        <h2 class="pull-left">My surveys</h2>
+
+        <a class="btn" href="#createsurveydialog" style="margin:5px 0 0 10px;" data-toggle="modal" >+ New survey</a>
+
+        <div class="yourboards" id="yourboards">
+                    
+        <!-- IF usersurveys -->
+            <!-- BEGIN usersurveys -->
+                    <div class="listedsurveycontainer">
+                        <div class="pull-right muted">Created {dateadded}</div>
+                        <div class="surveytitle"><a href="/app?surveyid={surveyid}">{surveyname}</a></div>
+                        <div class="surveydescriptionshort muted">{{ellips:surveydescription, 300}}</div>
+
+                        <a href="/app?surveyid={surveyid}" class="listedsurveylink questions">Edit (<strong>{questioncount}</strong> questions)</a>
+                        <a class="listedsurveylink respondents" href="/app?surveyid={surveyid}&amp;s=respondents">Respondents ({respondentcount})</a>
+                        <a class="listedsurveylink view" href="/survey?surveyid={surveyid}" target="_blank">View survey &rarr;</a>
+                    </div>
+            <!-- END usersurveys -->
+
+        <!-- ELSE -->
+            <p><em>You have no surveys yet. <a href="#createsurvey" data-toggle="modal" ><strong>Create your first survey</strong></a></em></p>
+        <!-- ENDIF -->
+        
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+<!-- INCLUDE app.modal.createsurvey.html -->
+<!-- INCLUDE app.modal.removesurvey.html -->

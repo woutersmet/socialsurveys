@@ -1,0 +1,163 @@
+
+<div class="modal" id="addquestiondialog" style="display:none;">
+  <div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">×</a>
+    <h3>Add a question / item</h3>
+  </div>
+
+<div class="newquestionformcontainer">
+ <form method="post" action="#newquestionform">
+          <input type="hidden" name="action" value="addquestion" />
+        <fieldset>
+          <legend>Add new item or question</legend>
+          <div class="clearfix  <!-- IF errorcode="INVALID_TYPE" -->error<!-- ENDIF -->">
+            <label for="questiontypeSelect">Type</label>
+            <div class="input">
+              <select name="questiontype" id="questiontypeSelect">
+                <optgroup label="Questions" id="optiongroupquestions">
+                    <option value="FREETEXT">Question: freeform text</option>
+                    <option value="INTEGER">Question: number</option>
+                    <option value="MULTIPLECHOICE">Question: Multiple choice</option>
+                    <option value="BOOLEAN">Question: Yes/no</option>
+                    <option value="GRID">Question: Grid</option>
+                </optgroup>
+                <optgroup label="Other" id="optiongroupother">
+                    <option value="INSTRUCTION">Instruction text</option>
+                    <option value="SUBTITLE">Question group (subtitle)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix" id="mandatoryinput">
+            <label for="questionmandatoryinput">Mandatory?</label>
+            <div class="input">
+              <input type="checkbox" id="questionmandatoryinput" name="ismandatory" checked="checked" /> <span class="muted">Not implemented yet!</span>
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix dynamicinput <!-- IF errorcode="INVALID_QUESTIONTEXT" -->error<!-- ENDIF -->" id="questiontextinputcontainer">
+            <label for="questiontextinput">Text</label>
+            <div class="input">
+              <input class="xlarge" id="questiontextinput" name="questiontext" value="{questiontext}" />
+            </div>
+          </div><!-- /clearfix -->          
+          <div class="clearfix dynamicinput" id="instructiontextinputcontainer" style="display:none;">
+            <label for="instructiontextinput">Text</label>
+            <div class="input">
+              <textarea name="instructiontext" id="instructiontextinput"></textarea>
+            </div>
+          </div><!-- /clearfix -->
+        <div class="clearfix dynamicinput" id="multiplechoiceanswersinputcontainer" style="display:none;">
+            <label for="possibleanswerinputscontainerdiv">Possible answers</label>
+            <div id="possibleanswerinputscontainerdiv" class="input">
+                <table id="possibleanswerinputscontainer" >
+                    <tr><th>Answer text</th><th>Numeric value?</th></tr>
+            <tr class="possibleanswer" >
+                <td><input type="text" size="20" name="possibleanswers[]"></td>
+                <td><input type="text" size="2" name="possibleanswerinternalnumericvalues[]" class="numericvalueinput"></td>
+            </tr>
+                </table>
+            <a href="#" id="addpossibleanswer">+add answer</a>
+            </div>
+          </div><!-- /clearfix -->
+        <div class="clearfix dynamicinput" id="gridanswersinputcontainer" style="display:none;">
+            <label for="gridanswerinputscontainerdiv">Possible answers</label>
+            <div id="gridanswerinputscontainerdiv" class="input">
+                Columns:
+                <table id="gridcolumninputscontainer" >
+                    <tr><th>Label</th><th>Numeric value?</th></tr>
+                    <tr class="possibleanswer" >
+                        <td><input type="text" size="20" name="gridcolumns[]"></td>
+                        <td><input type="text" size="2" name="gridcolumnnumericvalues[]" class="numericvalueinput"></td>
+                    </tr>
+                </table>
+                <a href="#" id="addgridcolumn">+add column</a><br />
+
+                Rows:
+                <table id="gridrowinputscontainer" >
+                    <tr class="possibleanswer" ><td><input type="text" size="20" name="gridrows[]"></td></tr>
+                </table>
+                <a href="#" id="addgridrow">+add row</a>
+            </div>
+          </div><!-- /clearfix -->
+          
+         <div class="modal-footer actions">
+           <input type="submit" class="btn primary" value="Add question / instruction">
+          <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            <div class="help-block">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      </div>
+  </div>
+
+<script>
+    $('#addquestiondialog').on('shown', function () {
+
+    //richt text editor controls
+    toolbarbuttons = [["bold", "italic", "underline","|","p", "h1", "h2","link", "unlink", "image","|", "cut", "copy", "paste", "|","HTML"]];
+    extrastyle = "/css/jhtmlarea/jHtmlArea.Editor.css";
+
+    $('#questiontypeSelect').change(function(){
+        //mandatory thingie only for questions
+        var selected = $("option:selected", this);
+        if(selected.parent()[0].id == "optiongroupquestions"){
+            $('#mandatoryinput').show();
+        } else if(selected.parent()[0].id == "optiongroupother"){
+            $('#mandatoryinput').hide();
+        }
+
+        var value = $(this).val();
+        $('.dynamicinput').hide();
+        if (value == 'MULTIPLECHOICE'){
+            $('#questiontextinputcontainer').show();
+            $('#multiplechoiceanswersinputcontainer').show();
+        } 
+        else if (value == 'INSTRUCTION'){
+            $('#instructiontextinputcontainer').show();
+            $("#instructiontextinput").htmlarea({toolbar: toolbarbuttons, css : extrastyle});
+        }
+        else if (value == 'GRID'){
+            $('#questiontextinputcontainer').show();
+            $('#gridanswersinputcontainer').show();
+        }
+        else {
+            $('#questiontextinputcontainer').show();
+        }
+    })
+
+    $('#addpossibleanswer').click(function(e){
+        e.preventDefault();
+        var newanswerinput = $('<tr class="possibleanswer" ><td><input type="text" size="20" name="possibleanswers[]"></td><td><input type="text" size="2" name="possibleanswerinternalnumericvalues[]" class="numericvalueinput"></td></tr>');
+        $('#possibleanswerinputscontainer').append(newanswerinput);
+        $('#possibleanswerinputscontainer').eq(-2).focus();
+    })
+
+    $('#addgridrow').click(function(e){
+        e.preventDefault();
+        var newanswerinput = $('<tr class="possibleanswer" ><td><input type="text" size="20" name="gridrows[]"></td></tr>');
+        $('#gridrowinputscontainer').append(newanswerinput);
+        $('#gridrowinputscontainer input:last').focus();
+    })
+
+    $('#addgridcolumn').click(function(e){
+        e.preventDefault();
+        var newanswerinput = $('<tr class="possibleanswer" ><td><input type="text" size="20" name="gridcolumns[]"></td><td><input type="text" size="2" name="gridcolumnnumericvalues[]" class="numericvalueinput"></td></tr>');
+        $('#gridcolumninputscontainer').append(newanswerinput);
+        $('#gridcolumninputscontainer input').eq(-2).focus();
+    })
+
+        //$("textarea").htmlarea(); // Initialize all TextArea's as jHtmlArea's with default values
+
+        $("#instructiontextinput").htmlarea({toolbar: toolbarbuttons, css : extrastyle});
+    
+              $('#surveynameinput').select();
+
+              $('#addquestiondialog li').click(function(){
+                $('#surveynameinput').val($(this).html())
+              });
+
+            });
+    </script>
+</div>

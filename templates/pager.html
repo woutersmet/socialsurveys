@@ -1,0 +1,24 @@
+<!-- IF pagerneeded -->
+
+<div class="pagination">
+  <ul>    
+      <li class="prev <!-- IF pager.current="1" -->disabled<!-- ENDIF -->"><a href="{pager.baselink}q={pager.prev}">&larr; Prev</a></li>
+        
+      <!-- IF pager.moretocomebefore --><li class="disabled"> <A href="#" onClick="return false;">...</a></li><!-- ENDIF -->
+
+    <!-- BEGIN pager.surrounding -->
+    <!-- IF page>"0" -->
+        <!-- IF page==top.pager.current -->
+            <li  class="active"><a href="#">{page}</a></li>
+        <!-- ELSE -->
+            <li><a href="{top.pager.baselink}q={page}">{page}</a></li>
+        <!-- ENDIF -->
+    <!-- ENDIF -->
+    <!-- END pager.surrounding -->
+
+    <!-- IF pager.moretocomeafter --><li class="disabled"> <a href="#" onClick="return false;">...</a></li><!-- ENDIF -->
+    <li class="next <!-- IF pager.current=pager.last -->disabled<!-- ENDIF -->"><a <!-- IF pager.current=pager.last -->class="disabled" onclick="return false;"<!-- ENDIF --> href="{pager.baselink}q={pager.next}">Next &rarr;</a></li>
+  </ul>
+</div>
+
+<!-- ENDIF -->

@@ -1,0 +1,20 @@
+
+<div class="modal" id="removeboard" style="display:none;">
+  <div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">×</a>
+    <h3>Remove board</h3>
+  </div>
+    <form method="post" action="/app">
+        <input class="boardidinput" type="hidden" name="removeboardid" value="{board.boardid}" />
+        <input type="hidden" name="action" value="removeboard" />
+      <div class="modal-body">
+          <p>
+              Sure you want to remove board <strong>{board.boardname}</strong>? This cannot be undone!
+          </p>
+      </div>
+  <div class="modal-footer">
+    <input type="submit" class="btn btn-primary danger" value="Get rid of it already!" />
+    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  </div>
+    </form>
+</div>

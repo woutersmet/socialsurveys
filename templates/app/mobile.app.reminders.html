@@ -1,0 +1,41 @@
+<!-- WRAPPER template < app/mobile.app.wrapper.html -->
+
+<h1>Reminders</h1>
+
+<!-- IF user.reminderemails="NO" -->
+  <p style="color:#ff0000">
+    You currently have e-mail reminders <strong>OFF</strong> so will not receive any e-mail reminders.<br />
+  </p>
+<!-- ELSE -->
+<p style="color:#00aa00">
+    You currently have e-mail reminders <strong>ON</strong> so will an e-mail for the reminders below.<br />
+  </p>
+<!-- ENDIF -->
+
+<!-- IF reminders -->
+<p>
+    Total reminders: <strong>{totalcount}</strong>.
+</p>
+
+<!-- INCLUDE ../pager.html -->
+
+<table class="zebra-striped condensed-table">
+    <tbody>
+    <!-- BEGIN reminders -->
+    <tr>
+        
+        <td style="width:400px;"> <strong>{barname}</strong></td>
+        <td><a href="/app?boardid={boardid}">board</a></td>
+        <td style="width:100px;">{reminderdate}</td>
+        <td>
+            <a onClick="return confirm('Sure you want to remove the reminder for: {barname} ?');" href="/app/m/reminders?action=removereminder&amp;barid={barid}">Del</a>
+        </td>
+    </tr>
+    <!-- END reminders -->
+    </tbody>
+</table>
+
+
+<!-- ELSE -->
+<em>No reminders found</em>
+<!-- ENDIF -->

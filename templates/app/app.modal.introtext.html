@@ -1,0 +1,23 @@
+<div class="modal" id="introtextdialog" style="display:none;">
+    <div class="modal-header">
+        <a href="#" class="close" data-dismiss="modal">×</a>
+        
+        <h3>Intro text</h3>
+    </div>
+
+    <div style="padding:10px;">
+    <p>
+        This text will be shown to the user before he starts the survey.
+    </p>
+    <form method="post">
+        <input type="hidden" name="action" value="setintrotext" />
+        <textarea class="introtextinput" id="introtextinput" name="introtext">{survey.introtext}</textarea>
+        
+        <div class="modal-footer actions">
+          <input class="btn primary" type="Submit" value="Save intro text" />
+          <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</div>

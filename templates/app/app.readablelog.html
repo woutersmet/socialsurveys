@@ -1,0 +1,22 @@
+
+<!-- IF action="ADD" -->
+    Added
+<!-- ELSEIF action="REMOVE" -->
+    Removed
+<!-- ELSEIF action="CHANGE" -->
+    Dabbled with
+<!-- ELSE -->
+    Dabbled with
+<!-- ENDIF -->
+
+<!-- IF entitytype="WIDGET" -->
+    <!-- IF listname --> list <strong>{listname}</strong><!-- ELSE -->a scribble<!-- ENDIF -->
+<!-- ELSEIF entitytype="BOARD" -->
+    the settings
+<!-- ELSEIF entitytype="BAR" -->
+    list item <strong>{barname}</strong>
+<!-- ELSE -->
+    god knows what
+<!-- ENDIF -->
+
+in board <a title="go to board" target="_blank" href="/app?boardid={boardid}"><strong>{boardname}<strong></a>.

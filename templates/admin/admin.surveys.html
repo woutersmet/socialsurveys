@@ -1,0 +1,20 @@
+<!-- WRAPPER template < admin/admin.wrapper.html -->
+<h1>Surveys</h1>
+
+<!-- IF surveys -->
+    <!-- BEGIN surveys -->
+            <div class="listedsurveycontainer">
+                <div class="pull-right muted">Created {dateadded}</div>
+                <div class="surveytitle">
+                    <a href="/app?surveyid={surveyid}">{surveyname}</a>
+                    by user
+                    <a href="/admin/users?userid={createdbyuserid}">User #{createdbyuserid}</a>
+                </div>
+                questions: <strong>{questioncount}</strong> - 
+                <!-- IF respondentcount -->respondents: <strong>{respondentcount}</strong><!-- ELSE -->no respondents so far<!-- ENDIF -->
+            </div>
+    <!-- END surveys -->
+
+<!-- ELSE -->
+    <p><em>You have no surveys yet. <a href="#createsurvey" data-toggle="modal" ><strong>Create your first survey</strong></a></em></p>
+<!-- ENDIF -->

@@ -1,0 +1,60 @@
+<!-- WRAPPER template < app/app.wrapper.html -->
+
+<div class="container">
+    <!-- IF profileuser -->
+
+<div class="row">
+    <div class="span4">
+        <h2>{profileuser.username}</h2>
+        <p>
+            <img src="{profileuser.avatarurl}" class="bigavatar" /><br />
+        </p>
+            
+        <p>
+            Member since: {profileuser.dateadded}
+        </p>
+        <!-- IF user.userid=profileuser.userid -->
+            <br />
+            <a href="/app/account">&larr; Edit profile</a>
+        <!-- ENDIF -->
+    </div>
+    
+    <div class="span12">
+        <h3>Latest public activity</h3>
+     
+        <!-- IF profileuser.latestactivity -->
+        <table class="zebra-striped condensed-table">
+            <thead>
+                <tr>
+                    <th style="width:168px;">I had too much time on...</th>
+                    <th>... so I just:</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN profileuser.latestactivity -->
+                <tr><td>{dateadded}</td>
+                    <td><!-- INCLUDE app.readablelog.html --></td>
+                </tr>
+            <!-- END profileuser.latestactivity -->
+            </tbody>
+        </table>
+        <!-- ELSE -->
+        <p>
+            Well, what can we say... {profileuser.username} is not what you would exactly call very (publicly) active!
+        </p>
+        <!-- ENDIF -->
+        
+        <h3>Message</h3>
+        <p>
+            If you don't know {profileuser.username} well enough to get in touch,
+            frankly you should leave the fellow/gal alone!
+        </p>
+    </div>
+  </div>
+
+    <!-- ELSE -->
+        <div id="actionstatemessage" class="alert-message error"><p><strong>Whoops!</strong> No user found</p></div>
+    <!-- ENDIF -->
+</div>
+
+<!-- INCLUDE ../site.footer.html -->

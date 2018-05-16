@@ -1,0 +1,17 @@
+<!-- WRAPPER template < admin/admin.wrapper.html -->
+<h1>Admin dashboard</h1>
+
+<h2>Quicklinks</h2>
+<ul>
+    <li><a href="/admin?action=phpinfo" target="_blank">PHP Info</a></li>
+    <li><a href="http://localhost/phpmyadmin/" target="_blank">Local PHPMyAdmin</a></li>
+</ul>
+
+<h2>Backups</h2>
+
+<form method="post">
+    <fieldset>
+    <input type="hidden" name="action" value="createbackup" />
+    <input class="btn" type="submit" value="Create Backup" />
+    </fieldset>
+</form>

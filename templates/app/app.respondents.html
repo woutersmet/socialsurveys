@@ -1,0 +1,54 @@
+<!-- WRAPPER template < app/app.wrapper.html -->
+
+<div class="container">
+   
+<!-- IF survey -->
+<h2>Respondents for: {survey.surveyname}</h2> -
+<a href="/app?surveyid={survey.surveyid}">&larr; Survey details</a> -
+<a href="/survey?surveyid={survey.surveyid}" target="_blank">View survey &rarr;</a>
+
+<h3>Respondents</h3>
+
+<table style="width:2000px;">
+    <!-- IF respondents -->
+        <tr>
+            <th>User</th>
+            <th>When?</th>
+            <!-- BEGIN answerablequestions -->
+                    <th>{questiontext}</th>
+            <!-- END answerablequestions -->
+        </tr>
+
+        <!-- BEGIN respondents -->
+            <tr>
+                <td>
+                    <!-- IF facebookuserid -->
+                  <a href="{facebookprofileurl}" title="{facebookname}" target="_blank">
+                    <img  src="https://graph.facebook.com/{facebookuserid}/picture?width=15&amp;height=15" />
+                    {facebookname}
+                  </a>
+
+                  <br /><a href="#" onClick="$(this).next('div').toggle();">FB data</a>
+                  <div style="overflow:auto;display:none;">{facebookdatadump}</div>
+                  <!-- ELSE -->
+                    [NO FB DATA]
+                  <!-- ENDIF -->
+                </td>
+                <td>{dateadded}</td>
+                <!-- BEGIN answers -->
+                    <td>
+                        <!-- IF possibleanswertext -->{possibleanswertext}<!-- ELSE -->{answeredtext}<!-- ENDIF -->
+                    </td>
+                <!-- END answers -->
+            </tr>
+        <!-- END respondents -->
+
+        <!-- ELSE -->
+        <p>
+            Nobody participated yet. <a href="/app?surveyid={surveyid}">Back to survey</a>
+        </p>
+        <!-- ENDIF -->
+
+<!-- ELSE -->
+    <em>Invalid survey requested.<a href="/app">Back to overview</a></em>
+<!-- ENDIF -->

@@ -1,0 +1,88 @@
+<!-- WRAPPER template < site.wrapper.html -->
+
+<h1>Join the incrowd!</h1>
+
+<!-- IF invitecoderequired -->
+<div class="alert-message warning">
+        <p><strong>Still in private beta!</strong> Request an invite code with Wouter if you want to sign up</p>
+      </div>
+<!-- ENDIF -->
+
+<div class="row">
+    <div class="span4">
+      <h2>Experimental</h2>
+      <p>
+          Social Surveys allows you to take surveys on Facebook.
+      </p>
+      
+      <p>
+          We promise that:
+      </p>
+      
+      <ul>
+          <li><strong>It will always be FREE</strong></li>
+          <li>Your e-mail will not be abused.</li>
+          <li>Your password is stored securely.</li>
+      </ul>
+      <p>
+          <a href="http://twitter.com/barlisto_com" target="_blank">Contact us</a> for remarks and suggestions.
+      </p>
+    </div>
+    
+    <div class="span12">
+      <form method="post" action="/signup">
+          <input type="hidden" name="action" value="signup" />
+        <fieldset>
+          <legend>You know the drill...</legend>
+          <div class="clearfix <!-- IF errorcode="INVALID_USERNAME" -->error<!-- ENDIF -->">
+            <label for="usernameInput">Your name</label>
+            <div class="input">
+              <input class="xlarge" id="usernameInput" name="username" value="{username}" />
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix <!-- IF errorcode="INVALID_PASSWORD" -->error<!-- ENDIF -->">
+            <label for="xlPassword">Password</label>
+            <div class="input">
+              <input type="password" class="xlarge" id="xlPassword" name="password" value="{password}" />
+              <span class="help-block">
+                Minimum 4 characters.
+              </span>
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix  <!-- IF errorcode="INVALID_EMAIL" -->error<!-- ENDIF -->">
+            <label for="xlEmail">E-mail</label>
+            <div class="input">
+              <input type="email" class="xlarge" id="xlEmail" name="email" value="{email}" />
+            </div>
+          </div><!-- /clearfix -->
+          
+          <!-- IF usecaptcha -->
+          <div class="clearfix <!-- IF errorcode="INVALID_CAPTCHA" -->error<!-- ENDIF -->">
+            <label for="xlCaptcha">Human? {captchaquestion}</label>
+            <div class="input">
+              <input type="text" class="xlarge" id="xlCatpcha" name="captcha" value="{captcha}" />
+              
+            </div>
+          </div><!-- /clearfix -->
+          <!-- ENDIF -->
+          
+          <!-- IF invitecoderequired -->
+          <div class="clearfix warning">
+            <label for="xlEmail"><strong>Invite code</strong></label>
+            <div class="input">
+              <input type="text" class="xlarge" id="xlEmail" name="invitecode" value="{invitecode}" size="30" />
+                <span class="help-inline">Ask Wouter!</span>
+                
+            </div>
+          </div><!-- /clearfix -->
+          <!-- ENDIF -->
+         <div class="actions">
+            <input type="submit" class="btn primary" value="Complete registration">
+            <div class="help-block">
+                <br />(Note: we'll use <a href="http://www.gravatar.com" target="_blank">Gravatar</a> to get a profile image based on your e-mail address, so please upload one there.)
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>

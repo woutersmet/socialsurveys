@@ -1,0 +1,34 @@
+<div class="topbar" data-dropdown="dropdown">
+  <div class="topbar-inner">
+    <div class="container">
+        
+        <h3 class="logo">
+            <a class="logolink" href="/"><img src="/images/logo_small.jpg" class="toplogo" /></a>
+            <a href="/admin">
+              Social Surveys Admin
+          </a>
+        </h3>
+        
+      <ul class="nav">
+        <li <!-- IF module=="overview" -->class="active"<!-- ENDIF -->><a href="/admin">Home</a></li>
+        <li <!-- IF module=="users" -->class="active"<!-- ENDIF -->><a href="/admin/users">Users</a></li>
+        <li <!-- IF module=="surveys" -->class="active"<!-- ENDIF -->><a href="/admin/surveys">Surveys</a></li>
+      </ul>
+
+      <div class="pull-right" style="color:white;">
+          <p>
+            Logged in as 
+            <a href="/app/account">
+                <strong>{user.username}</strong>
+                <img src="{user.avatarurl}" style="height:20px;"/>
+            </a>
+            <!-- IF user.rights="ADMIN" -->
+                [<small><a href="{__currentUrl}<!-- IF urlHasQueryString -->&amp;<!-- ELSE -->?<!-- ENDIF -->debugmode={debugmodehash}">DEBUG</a></small>]
+            <!-- ENDIF -->
+            <a href="/?action=logout">logout</a>
+          </p>
+      </div>
+
+    </div>
+  </div><!-- /topbar-inner -->
+</div><!-- /topbar -->

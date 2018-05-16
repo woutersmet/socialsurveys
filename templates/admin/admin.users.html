@@ -1,0 +1,46 @@
+<!-- WRAPPER template < admin/admin.wrapper.html -->
+<h1>Users</h1>
+
+<p>
+    Total users: <strong>{usercount}</strong>.
+</p>
+<!-- IF users -->
+
+<!-- INCLUDE empty.html -->
+<!-- INCLUDE ../pager.html -->
+
+<table class="zebra-striped condensed-table">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>E-mail</th>
+        <th>Member since</th>
+        <th># Logged in</th>
+        <th>Rights</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- BEGIN users -->
+    <tr>
+        
+        <td><strong><a href="/app/user?userid={userid}" target="_blank">{username}</a></strong> 
+            <span style="color:#aaa;">(# {userid})</span></td>
+        <td>{email}</td>
+        <td>{dateadded}</td>
+        <td>{timesloggedin}</td>
+        <td>{rights}</td>
+        <td>
+            <a onClick="return confirm('Sure you want to remove {username}? This cannot be undone!');" title="Permanently delete user" href="/admin/users?action=deleteuser&amp;userid={userid}">Del</a> |
+            <a title="Login as user. TIP: do right-click>open in incognito window to maintain admin login here!" href="/admin/users?action=loginas&amp;userid={userid}">Login as...</a>
+        </td>
+    </tr>
+    <!-- END users -->
+    </tbody>
+</table>
+
+<!-- INCLUDE ../pager.html -->
+
+<!-- ELSE -->
+<em>No users found</em>
+<!-- ENDIF -->

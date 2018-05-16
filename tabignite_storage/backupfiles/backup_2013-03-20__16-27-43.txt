@@ -1,0 +1,278 @@
+DROP TABLE changelogs;
+
+CREATE TABLE `changelogs` (
+  `changelogid` int(11) NOT NULL AUTO_INCREMENT,
+  `surveyid` int(11) DEFAULT NULL,
+  `userid` int(11) NOT NULL,
+  `entitytype` enum('SURVEY','QUESTION','ANSWER') COLLATE utf8_unicode_ci NOT NULL,
+  `entityid` int(11) NOT NULL,
+  `action` enum('ADD','CHANGE','REMOVE') COLLATE utf8_unicode_ci NOT NULL,
+  `specifics` text COLLATE utf8_unicode_ci NOT NULL,
+  `sessionid` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  PRIMARY KEY (`changelogid`),
+  KEY `idx_boardid` (`surveyid`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO changelogs VALUES("1","2","204","SURVEY","2","ADD","b:0;","dee7730a93347f330ead99c3ae8a011c","2013-03-20 02:35:57");
+INSERT INTO changelogs VALUES("2","49296","203","SURVEY","49296","ADD","b:0;","dee7730a93347f330ead99c3ae8a011c","2013-03-20 15:35:58");
+
+
+
+DROP TABLE question_possibleanswers;
+
+CREATE TABLE `question_possibleanswers` (
+  `possibleanswerid` int(11) NOT NULL AUTO_INCREMENT,
+  `questionid` int(11) NOT NULL,
+  `surveyid` varchar(256) NOT NULL,
+  `possibleanswertext` text NOT NULL,
+  `numericvalue` double NOT NULL,
+  `gridquestionid` int(11) NOT NULL,
+  `possibleanswerorder` int(11) NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  PRIMARY KEY (`possibleanswerid`),
+  KEY `idx_surveyid` (`surveyid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+INSERT INTO question_possibleanswers VALUES("1","2","2cf5976b18a7ab19207bf83d45c04cf9","Meh.","0","2","0","");
+INSERT INTO question_possibleanswers VALUES("2","2","2cf5976b18a7ab19207bf83d45c04cf9","Nice","2","2","0","");
+INSERT INTO question_possibleanswers VALUES("3","2","2cf5976b18a7ab19207bf83d45c04cf9","Smokin\'","4","2","0","");
+INSERT INTO question_possibleanswers VALUES("4","12","49296b58266ac48fd2b61ff4cfef67ea","Meh.","0","12","0","");
+INSERT INTO question_possibleanswers VALUES("5","12","49296b58266ac48fd2b61ff4cfef67ea","Nice.","2","12","0","");
+INSERT INTO question_possibleanswers VALUES("6","12","49296b58266ac48fd2b61ff4cfef67ea","Smokin\'!","4","12","0","");
+
+
+
+DROP TABLE questions;
+
+CREATE TABLE `questions` (
+  `questionid` int(11) NOT NULL AUTO_INCREMENT,
+  `questiontype` enum('FREETEXT','INTEGER','MULTIPLECHOICE','BOOLEAN','INSTRUCTION','PAGEBREAK','SUBTITLE','GRID','GRIDROW') NOT NULL DEFAULT 'FREETEXT',
+  `ismandatory` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  `surveyid` varchar(256) DEFAULT NULL,
+  `questiontext` text NOT NULL,
+  `questionorder` int(11) NOT NULL,
+  `gridquestionid` int(11) NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  `createdbyuserid` int(11) NOT NULL,
+  `lastedited` datetime NOT NULL,
+  `lasteditedbyuserid` int(11) NOT NULL,
+  PRIMARY KEY (`questionid`),
+  KEY `idx_surveyid` (`surveyid`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+INSERT INTO questions VALUES("2","GRID","NO","2cf5976b18a7ab19207bf83d45c04cf9","Ok, let\'s go:","0","0","2013-03-20 02:37:36","204","2013-03-20 02:37:36","204");
+INSERT INTO questions VALUES("3","GRIDROW","NO","2cf5976b18a7ab19207bf83d45c04cf9","Jennifer Lawrence","0","2","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("4","GRIDROW","NO","2cf5976b18a7ab19207bf83d45c04cf9","Jennifer Lopez","0","2","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("5","GRIDROW","NO","2cf5976b18a7ab19207bf83d45c04cf9","Jennifer Aniston","0","2","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("8","SUBTITLE","YES","2cf5976b18a7ab19207bf83d45c04cf9","A bit about yourself","0","0","2013-03-20 02:39:43","204","2013-03-20 02:39:43","204");
+INSERT INTO questions VALUES("9","FREETEXT","YES","2cf5976b18a7ab19207bf83d45c04cf9","Name","0","0","2013-03-20 02:39:55","204","2013-03-20 02:39:55","204");
+INSERT INTO questions VALUES("10","FREETEXT","YES","2cf5976b18a7ab19207bf83d45c04cf9","E-mail","0","0","2013-03-20 02:39:58","204","2013-03-20 02:39:58","204");
+INSERT INTO questions VALUES("11","INTEGER","YES","2cf5976b18a7ab19207bf83d45c04cf9","Age","0","0","2013-03-20 02:40:05","204","2013-03-20 02:40:05","204");
+INSERT INTO questions VALUES("12","GRID","YES","49296b58266ac48fd2b61ff4cfef67ea","Ok here we go:","0","0","2013-03-20 15:36:55","203","2013-03-20 15:36:55","203");
+INSERT INTO questions VALUES("13","GRIDROW","YES","49296b58266ac48fd2b61ff4cfef67ea","Jennifer Lawrence","0","12","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("14","GRIDROW","YES","49296b58266ac48fd2b61ff4cfef67ea","Jennifer Anniston","0","12","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("15","GRIDROW","YES","49296b58266ac48fd2b61ff4cfef67ea","Jennifer Lopez","0","12","","0","0000-00-00 00:00:00","0");
+INSERT INTO questions VALUES("16","FREETEXT","YES","49296b58266ac48fd2b61ff4cfef67ea","How did you hear of this survey?","0","0","2013-03-20 15:46:58","203","2013-03-20 15:46:58","203");
+
+
+
+DROP TABLE respondent_answers;
+
+CREATE TABLE `respondent_answers` (
+  `respondentanswerid` int(11) NOT NULL AUTO_INCREMENT,
+  `answeredid` int(11) NOT NULL,
+  `respondentid` int(11) NOT NULL,
+  `surveyid` varchar(256) DEFAULT NULL,
+  `questionid` int(11) DEFAULT NULL,
+  `answeredtext` text NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  PRIMARY KEY (`respondentanswerid`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+
+INSERT INTO respondent_answers VALUES("1","3","1","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("2","2","1","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("3","3","1","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("4","0","1","2cf5976b18a7ab19207bf83d45c04cf9","9","Wouter Smet","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("5","0","1","2cf5976b18a7ab19207bf83d45c04cf9","10","woutersmet@gmail.com","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("6","0","1","2cf5976b18a7ab19207bf83d45c04cf9","11","28","2013-03-20 02:46:26");
+INSERT INTO respondent_answers VALUES("7","2","2","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("8","2","2","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("9","2","2","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("10","0","2","2cf5976b18a7ab19207bf83d45c04cf9","9","Wouter 2","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("11","0","2","2cf5976b18a7ab19207bf83d45c04cf9","10","wouter@fuckyou.com","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("12","0","2","2cf5976b18a7ab19207bf83d45c04cf9","11","29","2013-03-20 03:07:56");
+INSERT INTO respondent_answers VALUES("13","1","9","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("14","2","9","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("15","3","9","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("16","0","9","2cf5976b18a7ab19207bf83d45c04cf9","9","Wouter","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("17","0","9","2cf5976b18a7ab19207bf83d45c04cf9","10","woutersmet@gmail.com","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("18","0","9","2cf5976b18a7ab19207bf83d45c04cf9","11","25","2013-03-20 15:28:26");
+INSERT INTO respondent_answers VALUES("19","1","9","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("20","2","9","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("21","3","9","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("22","0","9","2cf5976b18a7ab19207bf83d45c04cf9","9","asdf","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("23","0","9","2cf5976b18a7ab19207bf83d45c04cf9","10","asdf@asfasdf.comasdf","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("24","0","9","2cf5976b18a7ab19207bf83d45c04cf9","11","asdf","2013-03-20 15:30:58");
+INSERT INTO respondent_answers VALUES("25","1","9","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("26","2","9","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("27","1","9","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("28","0","9","2cf5976b18a7ab19207bf83d45c04cf9","9","asdf","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("29","0","9","2cf5976b18a7ab19207bf83d45c04cf9","10","adsf","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("30","0","9","2cf5976b18a7ab19207bf83d45c04cf9","11","asdf","2013-03-20 15:34:03");
+INSERT INTO respondent_answers VALUES("31","1","9","2cf5976b18a7ab19207bf83d45c04cf9","3","","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("32","2","9","2cf5976b18a7ab19207bf83d45c04cf9","4","","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("33","1","9","2cf5976b18a7ab19207bf83d45c04cf9","5","","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("34","0","9","2cf5976b18a7ab19207bf83d45c04cf9","9","asdf","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("35","0","9","2cf5976b18a7ab19207bf83d45c04cf9","10","adsf","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("36","0","9","2cf5976b18a7ab19207bf83d45c04cf9","11","asdf","2013-03-20 15:34:57");
+INSERT INTO respondent_answers VALUES("37","4","10","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 15:59:09");
+INSERT INTO respondent_answers VALUES("38","5","10","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 15:59:09");
+INSERT INTO respondent_answers VALUES("39","4","10","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 15:59:09");
+INSERT INTO respondent_answers VALUES("40","0","10","49296b58266ac48fd2b61ff4cfef67ea","16","From Koen!","2013-03-20 15:59:09");
+INSERT INTO respondent_answers VALUES("41","4","11","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:02:10");
+INSERT INTO respondent_answers VALUES("42","5","11","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:02:10");
+INSERT INTO respondent_answers VALUES("43","4","11","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:02:10");
+INSERT INTO respondent_answers VALUES("44","0","11","49296b58266ac48fd2b61ff4cfef67ea","16","TAKE TWO","2013-03-20 16:02:10");
+INSERT INTO respondent_answers VALUES("45","4","11","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:02:20");
+INSERT INTO respondent_answers VALUES("46","5","11","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:02:20");
+INSERT INTO respondent_answers VALUES("47","4","11","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:02:20");
+INSERT INTO respondent_answers VALUES("48","0","11","49296b58266ac48fd2b61ff4cfef67ea","16","TAKE TWO","2013-03-20 16:02:20");
+INSERT INTO respondent_answers VALUES("49","4","11","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:03:56");
+INSERT INTO respondent_answers VALUES("50","5","11","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:03:56");
+INSERT INTO respondent_answers VALUES("51","4","11","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:03:56");
+INSERT INTO respondent_answers VALUES("52","0","11","49296b58266ac48fd2b61ff4cfef67ea","16","TAKE TWO","2013-03-20 16:03:56");
+INSERT INTO respondent_answers VALUES("53","6","12","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:09:28");
+INSERT INTO respondent_answers VALUES("54","6","12","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:09:28");
+INSERT INTO respondent_answers VALUES("55","6","12","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:09:28");
+INSERT INTO respondent_answers VALUES("56","0","12","49296b58266ac48fd2b61ff4cfef67ea","16","Testing de test","2013-03-20 16:09:28");
+INSERT INTO respondent_answers VALUES("57","4","15","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:16:02");
+INSERT INTO respondent_answers VALUES("58","5","15","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:16:02");
+INSERT INTO respondent_answers VALUES("59","6","15","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:16:02");
+INSERT INTO respondent_answers VALUES("60","0","15","49296b58266ac48fd2b61ff4cfef67ea","16","saafsad","2013-03-20 16:16:02");
+INSERT INTO respondent_answers VALUES("61","4","15","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:16:04");
+INSERT INTO respondent_answers VALUES("62","5","15","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:16:04");
+INSERT INTO respondent_answers VALUES("63","6","15","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:16:04");
+INSERT INTO respondent_answers VALUES("64","0","15","49296b58266ac48fd2b61ff4cfef67ea","16","saafsad","2013-03-20 16:16:04");
+INSERT INTO respondent_answers VALUES("65","4","15","49296b58266ac48fd2b61ff4cfef67ea","13","","2013-03-20 16:16:05");
+INSERT INTO respondent_answers VALUES("66","5","15","49296b58266ac48fd2b61ff4cfef67ea","14","","2013-03-20 16:16:05");
+INSERT INTO respondent_answers VALUES("67","6","15","49296b58266ac48fd2b61ff4cfef67ea","15","","2013-03-20 16:16:05");
+INSERT INTO respondent_answers VALUES("68","0","15","49296b58266ac48fd2b61ff4cfef67ea","16","saafsad","2013-03-20 16:16:05");
+
+
+
+DROP TABLE respondent_surveys;
+
+CREATE TABLE `respondent_surveys` (
+  `respondentid` int(11) NOT NULL AUTO_INCREMENT,
+  `surveyid` varchar(256) DEFAULT NULL,
+  `dateaparticipated` datetime DEFAULT NULL,
+  KEY `idx_respondentid` (`respondentid`),
+  KEY `idx_surveyid` (`surveyid`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+INSERT INTO respondent_surveys VALUES("1","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 02:46:26");
+INSERT INTO respondent_surveys VALUES("2","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 03:07:56");
+INSERT INTO respondent_surveys VALUES("9","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 15:28:26");
+INSERT INTO respondent_surveys VALUES("9","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 15:30:58");
+INSERT INTO respondent_surveys VALUES("9","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 15:34:03");
+INSERT INTO respondent_surveys VALUES("9","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 15:34:57");
+INSERT INTO respondent_surveys VALUES("10","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 15:59:09");
+INSERT INTO respondent_surveys VALUES("11","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:02:10");
+INSERT INTO respondent_surveys VALUES("11","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:02:20");
+INSERT INTO respondent_surveys VALUES("11","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:03:56");
+INSERT INTO respondent_surveys VALUES("12","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:09:28");
+INSERT INTO respondent_surveys VALUES("15","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:16:02");
+INSERT INTO respondent_surveys VALUES("15","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:16:04");
+INSERT INTO respondent_surveys VALUES("15","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 16:16:05");
+
+
+
+DROP TABLE respondents;
+
+CREATE TABLE `respondents` (
+  `respondentid` int(11) NOT NULL AUTO_INCREMENT,
+  `facebookuserid` int(15) NOT NULL,
+  `facebookname` varchar(255) NOT NULL,
+  `facebookprofileurl` varchar(255) NOT NULL,
+  `facebookaccesstoken` varchar(256) NOT NULL,
+  `facebookdatadump` text NOT NULL,
+  `timesloggedin` int(11) NOT NULL,
+  `lastloggedin` datetime NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  `IP` varchar(100) NOT NULL,
+  PRIMARY KEY (`respondentid`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+INSERT INTO respondents VALUES("3","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 14:37:20","127.0.0.1");
+INSERT INTO respondents VALUES("4","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 14:38:19","127.0.0.1");
+INSERT INTO respondents VALUES("5","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 14:38:26","127.0.0.1");
+INSERT INTO respondents VALUES("6","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 15:19:44","127.0.0.1");
+INSERT INTO respondents VALUES("7","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 15:19:48","127.0.0.1");
+INSERT INTO respondents VALUES("8","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 15:19:50","127.0.0.1");
+INSERT INTO respondents VALUES("9","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 15:20:08","127.0.0.1");
+INSERT INTO respondents VALUES("10","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 15:48:54","127.0.0.1");
+INSERT INTO respondents VALUES("11","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 16:02:01","127.0.0.1");
+INSERT INTO respondents VALUES("12","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"bio\":\"\\u201cThe best things in life are silly\\u201d - Scott Adams\\r\\n\\r\\nBo?\",\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"email\":\"woutersmet@gmail.com\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 16:09:16","127.0.0.1");
+INSERT INTO respondents VALUES("13","704097562","Wouter Smet","http://www.facebook.com/woutersmet","","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"bio\":\"\\u201cThe best things in life are silly\\u201d - Scott Adams\\r\\n\\r\\nBo?\",\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"email\":\"woutersmet@gmail.com\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 16:10:14","127.0.0.1");
+INSERT INTO respondents VALUES("14","704097562","Wouter Smet","http://www.facebook.com/woutersmet","AAACYaizedyQBAMG1tLn9ZCJtJ9YVlLTRwhlowZCo9xaQdn4EFEU787izLrDktZBclaIy2WU4J0fDZBa849EV2MXLF8Gi8q1RYcOpfvztLgZDZD","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"bio\":\"\\u201cThe best things in life are silly\\u201d - Scott Adams\\r\\n\\r\\nBo?\",\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"email\":\"woutersmet@gmail.com\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 16:13:49","127.0.0.1");
+INSERT INTO respondents VALUES("15","704097562","Wouter Smet","http://www.facebook.com/woutersmet","AAACYaizedyQBAMG1tLn9ZCJtJ9YVlLTRwhlowZCo9xaQdn4EFEU787izLrDktZBclaIy2WU4J0fDZBa849EV2MXLF8Gi8q1RYcOpfvztLgZDZD","{\"id\":\"704097562\",\"name\":\"Wouter Smet\",\"first_name\":\"Wouter\",\"last_name\":\"Smet\",\"link\":\"http:\\/\\/www.facebook.com\\/woutersmet\",\"username\":\"woutersmet\",\"birthday\":\"10\\/15\\/1984\",\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"bio\":\"\\u201cThe best things in life are silly\\u201d - Scott Adams\\r\\n\\r\\nBo?\",\"quotes\":\"\\\"Make everything as simple as possible, but not simpler\\\" - A. Einstein\\r\\n\\r\\n\\\"Always forgive your enemies - nothing annoys them so much. \\\" \\r\\n- O. Wilde\",\"work\":[{\"employer\":{\"id\":\"110000735702314\",\"name\":\"Engagor\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"137427172963071\",\"name\":\"Customer Relations\"},\"description\":\"Making and keeping people happy :-)\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"230127387057408\",\"name\":\"MyShoppingTab\"},\"location\":{\"id\":\"102155463159279\",\"name\":\"Gent, Belgium\"},\"position\":{\"id\":\"106324149403234\",\"name\":\"Co-founder\"},\"description\":\"E-commerce from your Facebook page\",\"start_date\":\"0000-00\"},{\"employer\":{\"id\":\"130844650273938\",\"name\":\"Massivemedia\"},\"start_date\":\"0000-00\",\"end_date\":\"0000-00\"}],\"education\":[{\"school\":{\"id\":\"240544726004671\",\"name\":\"Universiteit Gent\"},\"type\":\"College\",\"classes\":[{\"id\":\"144276582298728\",\"name\":\"Theoretical Physics\",\"with\":[{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}],\"from\":{\"id\":\"1312580147\",\"name\":\"Ilja Strobbe\"}}]},{\"school\":{\"id\":\"107887059244789\",\"name\":\"Ugent\"},\"degree\":{\"id\":\"109279729089828\",\"name\":\"Physics\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"concentration\":[{\"id\":\"112914855390159\",\"name\":\"Theoretical Physics\"}],\"type\":\"Graduate School\"},{\"school\":{\"id\":\"109851592375053\",\"name\":\"Complutense University of Madrid\"},\"degree\":{\"id\":\"201841886495897\",\"name\":\"MSc in Mathematics\"},\"concentration\":[{\"id\":\"103966102974293\",\"name\":\"Mathematics\"}],\"type\":\"Graduate School\"}],\"gender\":\"male\",\"email\":\"woutersmet@gmail.com\",\"timezone\":1,\"locale\":\"en_US\",\"languages\":[{\"id\":\"107672419256005\",\"name\":\"Dutch\"},{\"id\":\"106059522759137\",\"name\":\"English\"},{\"id\":\"108106272550772\",\"name\":\"French\"},{\"id\":\"110343528993409\",\"name\":\"Spanish\"},{\"id\":\"113153272032690\",\"name\":\"Italian\"}],\"verified\":true,\"updated_time\":\"2013-03-20T13:26:49+0000\"}","0","0000-00-00 00:00:00","2013-03-20 16:15:52","127.0.0.1");
+
+
+
+DROP TABLE surveys;
+
+CREATE TABLE `surveys` (
+  `surveyinsertid` int(11) NOT NULL AUTO_INCREMENT,
+  `surveyid` varchar(256) NOT NULL,
+  `surveyname` varchar(255) DEFAULT NULL,
+  `introtext` text NOT NULL,
+  `backgroundcolor` varchar(7) NOT NULL DEFAULT '#eeeeee',
+  `textcolor` varchar(7) NOT NULL DEFAULT '#111111',
+  `createdbyuserid` int(11) NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  `status` enum('ONLINE','DELETED') NOT NULL DEFAULT 'ONLINE',
+  PRIMARY KEY (`surveyinsertid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+INSERT INTO surveys VALUES("1","2cf5976b18a7ab19207bf83d45c04cf9","Jennifer quiz","Hi!<div><br></div><div>This is a survey on <b>famous people named Jennifer</b>.</div>","#eeeeee","#111111","204","2013-03-20 02:35:57","ONLINE");
+INSERT INTO surveys VALUES("2","49296b58266ac48fd2b61ff4cfef67ea","The Jennifers","How much do you like popular people named Jennifer? Take this short survey please to let us know.<div><br></div><div>There is no contest attached to this, it\'s just for science baby!</div>","#eeeeee","#111111","203","2013-03-20 15:35:58","ONLINE");
+
+
+
+DROP TABLE user_surveys;
+
+CREATE TABLE `user_surveys` (
+  `userid` int(11) DEFAULT NULL,
+  `surveyid` varchar(256) DEFAULT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  UNIQUE KEY `userid` (`userid`,`surveyid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO user_surveys VALUES("204","2cf5976b18a7ab19207bf83d45c04cf9","2013-03-20 02:35:57");
+INSERT INTO user_surveys VALUES("203","49296b58266ac48fd2b61ff4cfef67ea","2013-03-20 15:35:58");
+
+
+
+DROP TABLE users;
+
+CREATE TABLE `users` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `emailstatus` enum('CONFIRMED','UNCONFIRMED') NOT NULL DEFAULT 'UNCONFIRMED',
+  `password` varchar(255) DEFAULT NULL,
+  `rights` enum('USER','ADMIN') NOT NULL DEFAULT 'USER',
+  `reminderemails` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  `timesloggedin` int(11) NOT NULL,
+  `lastloggedin` datetime NOT NULL,
+  `dateadded` datetime DEFAULT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE KEY `idx_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=latin1;
+
+INSERT INTO users VALUES("203","woutersmet@gmail.com","wouter","UNCONFIRMED","3002e313fb93e1da8dca4397803c39de","ADMIN","YES","3","2013-03-20 16:21:15","2013-03-19 08:45:49");
+INSERT INTO users VALUES("204","wouter@asdf.com","wouter2","UNCONFIRMED","3002e313fb93e1da8dca4397803c39de","USER","YES","1","2013-03-19 14:04:23","2013-03-19 14:04:23");
+
+
+

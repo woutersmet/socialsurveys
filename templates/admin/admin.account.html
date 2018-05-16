@@ -1,0 +1,57 @@
+<!-- WRAPPER template < members/members.wrapper.html -->
+<h1>Account</h1>
+
+
+<div class="row">
+    <div class="span4">
+      <h2>Avatar</h2>
+    <p>
+        <img src="{user.avatarurl}" /><br />
+        Your avatar is powered by <a href="http://gravatar.com" target="_blank">Gravatar.com</a>, so
+        please go there to add / edit your avatar.
+    </p>
+    </div>
+    
+    <div class="span12">
+      <form method="post" action="/signup">
+          <input type="hidden" name="action" value="updateuserdata" />
+        <fieldset>
+          <legend>Update your user data</legend>
+          <div class="clearfix <!-- IF errorcode="INVALID_USERNAME" -->error<!-- ENDIF -->">
+            <label for="usernameInput">Username</label>
+            <div class="input">
+              <input class="xlarge" id="usernameInput" name="username" value="{user.username}" />
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix <!-- IF errorcode="INVALID_PASSWORD" -->error<!-- ENDIF -->">
+            <label for="xlPassword">Password</label>
+            <div class="input">
+              <input type="password" class="xlarge" id="xlPassword" name="password" value="" />
+              <span class="help-block">
+                 Leave blank to un change.
+              </span>
+            </div>
+          </div><!-- /clearfix -->
+          <div class="clearfix  <!-- IF errorcode="INVALID_EMAIL" -->error<!-- ENDIF -->">
+            <label for="xlEmail">E-mail</label>
+            <div class="input">
+              <input type="email" class="xlarge" id="xlEmail" name="email" value="{user.email}" />
+            </div>
+          </div><!-- /clearfix -->
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Update">
+          </div>
+        </fieldset>
+      </form>
+        
+      <form method="post" action="/signup">
+          <input type="hidden" name="action" value="updateuserdata" />
+        <fieldset>
+          <legend>Remove account</legend>
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Remove">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>

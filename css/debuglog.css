@@ -1,0 +1,54 @@
+#debuglog
+{
+    position:absolute;
+    top:40px;
+    font-size:80%;
+    background-color:#111;
+    color:#fff;
+    padding:2px;
+    width:100%;
+    opacity:0.8;
+    z-index:1200;
+}
+
+#debuglog li
+{
+    color:#fff;
+}
+
+#debuglog pre 
+{
+    color:black;
+}
+
+#debuglog a
+{
+    color:#ffa;
+}
+
+#debuglog .error
+{
+    padding:0;
+    margin:0;
+    color:#522;
+    font-weight:Bold;
+    background-color:#faa;
+}
+
+#debuglog .query
+{
+    color:#afa;
+}
+
+#debuglog .h1
+{
+    color:#aaa;
+    font-size:150%;
+}
+
+#debuglog .codelocation {
+    background-color:#fff;
+    border:1px solid #aaa;
+    color:#555;
+    width:800px;
+}

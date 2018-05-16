@@ -1,0 +1,84 @@
+  body {
+    background-color:#ddd;
+  }
+
+  #debuglog {
+    top:0;
+  }
+
+  #bigfattable {
+    background-color:#fff;
+    margin-top:10px;
+    border:1px solid #ddd;
+    width:750px;
+    text-align:left;
+    position:relative;
+  }
+
+  .introtext { 
+    border:1px solid #eee;
+    padding:10px;
+    margin-bottom:10px;
+  }
+
+  .questiontext {
+    font-weight:bold;
+  }
+
+  .instructioncontainer {
+    border:1px solid #ddd;
+    padding:10px;
+    margin-bottom:10px;
+  }
+
+  .questioncontainer {
+    border:1px solid #ddd;
+    background-color:#eee;
+    padding:10px;
+    margin-bottom:10px;
+  }
+
+  .freetextinput {
+    margin:5px 0 5px 0;
+    width:100%;
+    height:20px;
+  }
+
+  #actionstatemessage {
+  }
+
+  .surveynameheader {
+    text-align:center;
+  }
+
+  .footer {
+    margin-top:10px;
+    color:#ccc;
+    font-size:90%;
+    text-align:center;
+  }
+
+  .footer a {
+    color:#999;
+    font-weight:bold;
+  }
+
+  .gridinputs label {
+    width:100%;
+    height:100%;
+    text-align:center;
+    padding-top:0;
+  }
+
+  table.gridinputs .gridinputheader th {
+    text-align:center;
+  }
+
+  table.gridinputs tbody td, table.gridinputs tbody th {
+    padding-top:5px;
+    padding-bottom:5px;
+  }
+
+  table.gridinputs tr:hover {
+    background-color:#ddd;
+  }

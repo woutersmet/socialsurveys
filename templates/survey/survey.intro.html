@@ -1,0 +1,19 @@
+<!-- WRAPPER template < survey/survey.wrapper.html -->
+
+<!-- IF survey -->
+<h2 class="surveynameheader">{survey.surveyname}</h2>
+
+  <!-- IF survey.introtext --><div class="introtext">{survey.introtext}</div><!-- ENDIF -->
+
+  <div>
+  <!-- IF respondentstatus="NOTAUTHENTICATED" -->
+  		<center><a class="btn primary" href="{fbloginUrl}">Authenticate to begin &rarr;</a></center>
+  <!-- ELSE -->
+  		You are authenticated on Facebook, yay!
+  <!-- ENDIF -->
+</div>
+
+<!-- ELSE -->
+<h1>Social Survey</h1>
+<em>Whoops, survey not found.</em>
+<!-- ENDIF --> 

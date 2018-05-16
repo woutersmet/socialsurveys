@@ -1,0 +1,31 @@
+<html>
+<head>
+    
+    <!-- INCLUDE ../site.commonincludes.html -->
+    <title>SocialSurveys | Admin</title>
+
+    <!-- INCLUDE admin.headerincludes.html -->
+</head>
+
+<body>
+
+<!-- IF debuglog -->
+    <!-- INCLUDE ../site.debuglog.html -->
+<!-- ENDIF debuglog -->
+    
+<!-- INCLUDE admin.header.html -->
+
+    <div class="container">
+
+         <!-- IF actionstate="success" --><div class="alert-message success"><p><strong>Success!</strong> {actionstatemessage}</p></div><!-- ENDIF -->
+        <!-- IF actionstate="fail" --><div class="alert-message error"><p><strong>Whoops!</strong> {actionstatemessage}</p></div><!-- ENDIF -->
+
+        <!-- WRAPPEE [content] -->
+    </div>
+
+<!-- INCLUDE admin.footer.html -->
+    
+<!-- INCLUDE ../gatracking.html -->
+
+</body>
+</html>

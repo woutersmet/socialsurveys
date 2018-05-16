@@ -1,0 +1,44 @@
+<div class="topbar" data-dropdown="dropdown">
+  <div class="topbar-inner">
+    <div class="container">
+      <h3 class="logo">
+          <a class="logolink" href="/"><img src="/images/logo_small.jpg" class="toplogo" /></a>
+          <a href="/" >
+              {sitename}
+          </a>
+      </h3>
+      <ul class="nav">
+        <li <!-- IF module=="index" -->class="active"<!-- ENDIF -->><a href="/">About</a></li>
+        <!-- IF user -->
+            <!-- IF __isguest -->
+                <li <!-- IF module=="signup" -->class="active"<!-- ENDIF -->><a href="/signup">Sign up</a></li>
+            <!-- ELSE -->
+                <li ><a href="/app" style="background-color:#666;">To application » </a></li>
+            <!-- ENDIF -->
+        <!-- ELSE -->
+            <li <!-- IF module=="signup" -->class="active"<!-- ENDIF -->><a href="/signup">Sign up</a></li>
+        <!-- ENDIF -->
+      </ul>
+
+      <!-- IF user -->
+      <div class="pull-right" style="color:white;">
+          <p>
+        Logged in as <strong>{user.username}</strong>
+            <!-- IF user.rights="ADMIN" -->
+            [<small><a href="{__currentUrl}<!-- IF urlHasQueryString -->&amp;<!-- ELSE -->?<!-- ENDIF -->debugmode={debugmodehash}">DEBUG</a></small>]
+            <!-- ENDIF -->
+            <a href="/?action=logout">logout</a>
+          </p>
+      </div>
+    <!-- ELSE -->
+      <form class="pull-right" method="post" action="/login">
+        <input type="hidden" name="action" value="login" />
+        <input style="width:100px" type="text" placeholder="E-mail" name="email" value="{email}">
+        <input style="width:100px" type="password" placeholder="Password" name="password" >
+        <input type="submit" value="Log in">
+      </form>
+        <!-- ENDIF -->
+
+    </div>
+  </div><!-- /topbar-inner -->
+</div><!-- /topbar -->

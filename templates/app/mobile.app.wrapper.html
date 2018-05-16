@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{sitename} | Online boards with lists and scribbles</title>
+   
+    <link rel="stylesheet" href="/css/app.css" type="text/css" media="screen" />
+
+    <!-- INCLUDE ../mobile.commonincludes.html -->
+    
+    <!-- IF board -->
+        <script src="/js/app.barlisto.js?nocache={staticversion}" type="text/javascript"></script>
+        <script src="/js/app.js?nocache={staticversion}" type="text/javascript"></script>
+        <script src="/js/jquery.jeditable.min.js" type="text/javascript"></script>
+        <script src="/js/jquery.miniColors.js" type="text/javascript"></script>
+    <!-- ENDIF -->
+    
+    <!-- INCLUDE ../gatracking.html -->
+</head>
+
+<body>
+
+<!-- IF debuglog --><!-- INCLUDE ../site.debuglog.html --><!-- ENDIF debuglog -->
+
+<!-- INCLUDE mobile.app.header.html -->
+
+<div class="container">
+
+         <!-- IF actionstate="success" --><div class="alert-message success"><p><strong>Success!</strong> {actionstatemessage}</p></div><!-- ENDIF -->
+        <!-- IF actionstate="fail" --><div class="alert-message error"><p><strong>Whoops!</strong> {actionstatemessage}</p></div><!-- ENDIF -->
+        
+        <!-- WRAPPEE [content] -->
+        <div style="clear:both;"></div>
+    
+</div>
+
+</body>
+</html>

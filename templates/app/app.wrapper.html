@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!-- INCLUDE ../site.commonincludes.html -->
+    
+    <title><!-- IF specifictitle -->{specifictitle} | <!-- ENDIF -->Social Surveys</title>
+
+    <!-- INCLUDE app.headerincludes.html -->
+    
+    <!-- INCLUDE ../gatracking.html -->
+    <!-- INCLUDE ../inspectlettracking.html -->
+</head>
+
+<body>
+
+<!-- IF debuglog -->
+<!-- INCLUDE ../site.debuglog.html -->
+<!-- ENDIF debuglog -->
+
+<!-- INCLUDE app.header.html -->
+
+<div class="container main">
+
+    <!-- IF actionstate -->
+        <!-- IF actionstate="success" -->
+            <div id="actionstatemessage" class="alert-message success"><p><strong>Success!</strong> {actionstatemessage}</p></div>
+        <!-- ENDIF -->
+        <!-- IF actionstate="fail" -->
+            <div id="actionstatemessage" class="alert-message error"><p><strong>Whoops!</strong> {actionstatemessage}</p></div>
+        <!-- ENDIF -->
+        
+        <script>
+            $('#actionstatemessage').fadeOut(3000);
+        </script>
+    <!-- ENDIF -->
+
+</div>
+    <!-- WRAPPEE [content] -->
+
+    <!-- INCLUDE app.footer.html -->
+</body>
+</html>

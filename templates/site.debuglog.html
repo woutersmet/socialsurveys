@@ -1,0 +1,25 @@
+<div id="debuglog">
+    <a href="#" onClick="$('#debuglogcontent').toggle();return false;">Show/hide debug logs</a> | 
+    <a href="{__currentUrl}&amp;debugmode=0">TURN OFF</a>
+    Cache hits: {debuglog.sysInfo.QueriesWithCache}
+    misses: {debuglog.sysInfo.QueriesWithoutCache}
+    Loadtime: {timeuntiltemplate}ms
+    <div id="debuglogcontent" style="display:none;">
+    <h2>Debug log</h2>
+        <ul >
+        <!-- BEGIN debuglog -->
+                <li class="{formatting}">
+                        <!-- IF toggletitle -->
+                                <a href="#" onClick="$(this).next().toggle();return false;">{toggletitle}</a>
+                                <div style="display:none;"><pre>{message}</pre></div>
+                        <!-- ELSE -->
+                                {message}
+                        <!-- ENDIF -->
+                </li>
+        <!-- END debuglog -->
+        </ul>
+        
+    <a href="#" onClick="$('#debuglogcontent').toggle();">hide debug logs</a>
+    
+    </div>
+</div>

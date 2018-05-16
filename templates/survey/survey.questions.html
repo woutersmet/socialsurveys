@@ -1,0 +1,96 @@
+<!-- WRAPPER template < survey/survey.wrapper.html -->
+  <a href="{respondent.facebookprofileurl}" title="Connected as {respondent.facebookname}" target="_blank" class="pull-left">
+    <img  src="https://graph.facebook.com/{respondent.facebookuserid}/picture?width=20&amp;height=20" />
+  </a>
+
+  <!-- IF survey -->
+  
+  <h2 class="surveynameheader">{survey.surveyname}</h2>
+
+    <!-- IF survey.questions -->
+    <form method="post">
+      <input type="hidden" name="action" value="participate">
+      <input type="hidden" name="browsersonly" id="browsersonly" value="{check}" />
+      <input type="hidden" name="browsersonly2" id="browsersonly2" value="" />
+      <!-- BEGIN survey.questions -->
+        <!-- IF questiontype="INSTRUCTION" -->
+            <div class="instructioncontainer">{questiontext}</div>
+        <!-- ELSEIF questiontype="SUBTITLE" -->
+          <h3 class="subtitle">{questiontext}</h3>
+        <!-- ELSE -->
+          <div class="questioncontainer">
+            <!-- IF ismandatory="NO" --><div class="muted pull-right">Optional</div><!-- ENDIF -->
+            
+            <div class="questiontext">{questiontext}</div>
+            <div class="answercontainer">
+                <!-- IF questiontype="FREETEXT" -->
+                  <input class="freetextinput" type="text" name="answers[question_{questiontype}_{questionid}]" />
+                <!-- ELSEIF questiontype="INTEGER" -->
+                  <input class="freetextinput" type="text" name="answers[question_{questiontype}_{questionid}]" />
+                <!-- ELSEIF questiontype="MULTIPLECHOICE" -->
+                    <!-- BEGIN possibleanswers -->
+                      <label>
+                            <input type="radio" name="answers[question_{parent.questiontype}_{parent.questionid}]" value="{possibleanswerid}" />
+                            {possibleanswertext}
+                            </label>
+                    <!-- END possibleanswers -->
+                <!-- ELSEIF questiontype="GRID" -->
+                    <table class="gridinputs table-condensed table-hover">
+                      <thead>
+                        <tr class="gridinputheader">
+                            <th>&nbsp;</th>
+                            <!-- BEGIN gridcolumns -->
+                                <th>{possibleanswertext}</td>
+                            <!-- END gridcolumns -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- BEGIN gridrows -->
+                            <tr>
+                                <th>{questiontext}</th>
+                                <!-- BEGIN rowcolumns -->
+                                    <td>
+                                      <label>
+                                        <input type="radio" name="answers[question_{parent.questiontype}_{parent.questionid}]" value="{possibleanswerid}" />
+                                      </label>
+                                      </td>
+                                <!-- END rowcolumns -->
+                            </tr>
+                        <!-- END gridrows -->
+                      </tbody>
+                    </table>
+                <!-- ELSEIF questiontype="BOOLEAN" -->
+                  <select name="answers[question_{questiontype}_{questionid}]">
+                      <option value=""></option>
+                      <option value="YES">Yes</option>
+                      <option value="NO">No</option>
+                  </select>
+                <!-- ENDIF -->
+                <div style="clear:both;"></div>
+            </div>
+          </div>
+        <!-- ENDIF -->
+      <!-- END survey.questions -->
+      <center>
+        <input class="btn primary" type="submit" value="Submit my answers!" onClick="return confirm('Are you sure you want to submit these answers? You cannot correct them afterwards!');" />
+      </center>
+
+
+<script>
+  $(document).ready(function(){
+
+        setTimeout(function(){
+            $('#browsersonly2').val($('#browsersonly').val());
+        }, 1000)
+  });
+</script>
+
+
+    <!-- ELSE -->
+      <p><em>This survey has no questions.</em></p>
+    <!-- ENDIF -->
+
+  <!-- ELSE -->
+  <h1>Social Survey</h1>
+  <em>Whoops, survey not found.</em>
+  <!-- ENDIF --> 

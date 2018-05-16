@@ -35,9 +35,9 @@ $vars = Array(
                                   'database' => 'socialsurveys'
                         ),               
         'online' => array('host' => 'localhost',
-                           'user' => 'wauter_ss',
-                           'pass' => 'testing123',
-                           'database' => 'wauter_socialsurveys'
+                           'user' => 'woutersm_socials',
+                           'pass' => 'testing123skda',
+                           'database' => 'woutersm_socialsurveys'
                         ) 
 	),						
 'mail' => array(

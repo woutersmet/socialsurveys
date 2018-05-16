@@ -126,7 +126,8 @@ Class surveyController extends baseController
 
             // Create our Application instance (replace this with your appId and secret).
             //from my app page social surveys: https://developers.facebook.com/apps/167581786732324/summary?web_hosting=true
-            $facebook = new Facebook(array('appId'  => '167581786732324','secret' => '38380ae3bc2577869dc3bc6731d1b0fe',));
+            $facebook = new Facebook(array('appId'  => '167581786732324','secret' => 'da99b26a7e38f98abaf9467c3a5b99f5',));
+            
             $permissions = array('scope' => $this->survey['facebookscope']);
 
             // Get User ID
